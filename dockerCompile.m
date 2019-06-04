@@ -5,15 +5,15 @@ function dockerCompile
 %   Ex:
 %       >> dockerCompile
 
-folderName = '/CompiledFiles'
+outputPath = 'CompiledFiles'
 baseFolder = pwd;
 desFolder = fullfile(pwd,'designer');
 %   Reset Relevant Folder
-if isdir(folderName)
-    rmdir(folderName,'s');
-    mkdir(folderName);
+if isdir(outputPath)
+    rmdir(outputPath,'s');
+    mkdir(outputPath);
 else
-    mkdir(folderName);
+    mkdir(outputPath);
 end
 
 %% Files to Compile
@@ -29,26 +29,34 @@ irlls = '/Users/sid/Repos/DKI-Designer/IRLLS/irlls.m';
 
 %% Folders to Compile
 niftiPath = '/Users/sid/Repos/DKI-Designer/designer/NIfTI_20140122';
-median = '/Users/sid/Repos/DKI-Designer/Median_Filter'
+median = '/Users/sid/Repos/DKI-Designer/Median_Filter';
+extras = '/Users/sid/Repos/DKI-Designer/Extras';
 
-%% Files to I
-%   Directories to include in compilation
-gradientDir = ['.' filesep 'gradientVectors'];
+%% Dependencies
+dirs10000 = '/Users/sid/Repos/DKI-Designer/dirs10000.mat';
+dirs15 = '/Users/sid/Repos/DKI-Designer/designer/dirs15.txt';
+dirs30 = '/Users/sid/Repos/DKI-Designer/designer/dirs30.txt';
 
-%   Run compiler
-fprintf('1. Compiling DKE (1/3)\n');
-mcc('-v','-m','dke.m','-o','dke','-a',gradientDir,...
-    '-a',mexFolder,'-d',folderName);
-fprintf('\n\n');
+%% Run Compiler
+mcc('-v','-m',tensor,'-o','tensorfitting',...
+    '-a',run_smoothing,...
+    '-a',gibbs,...
+    '-a',outlier,...
+    '-a',dki_fit,...
+    '-a',dki_param,...
+    '-a',smoothing,...
+    '-a',wmti,...
+    '-a',irlls,...
+    '-a',niftiPath,...
+    '-a',median,...
+    '-a',dirs10000,...
+    '-a',dirs15,...
+    '-a',dirs30,...
+    '-d',outputPath);
 
-fprintf('2. Compiling dke_preprocess_dicom (2/3)\n');
-mcc('-v','-m','dke_preprocess_dicom.m','-o','dke_preprocess_dicom',...
-    '-a','spm_dicom_dict.mat','-d',folderName);
-fprintf('\n\n');
-
-fprintf('3. Compiling map_interpolate (3/3)\n');
-mcc('-v','-m','map_interpolate.m','-o','map_interpolation',...
-    '-d',folderName);
-fprintf('\n\n');
-fprintf('completed\n\n')
+%% Copy Python Files
+copyfile(fullfile('designer','designer.sh'),...
+    fullfile(outputPath,'designer.sh'));
+copyfile(fullfile('designer','designer.py'),...
+    fullfile(outputPath,'designer.py'));
 end
