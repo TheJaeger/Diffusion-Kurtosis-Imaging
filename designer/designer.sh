@@ -15,7 +15,7 @@ input=$1
 output=$2
 
 # Run designer
-.designer.py \
+python3 designer.py \
 -denoise -extent 5,5,5 \
 -degibbs \
 -rician \
