@@ -5,37 +5,37 @@ function dockerCompile
 %   Ex:
 %       >> dockerCompile
 
-outputPath = 'CompiledFiles'
+outputPath = fullfile(pwd,'CompiledFiles');
 baseFolder = pwd;
 desFolder = fullfile(pwd,'designer');
 %   Reset Relevant Folder
-if isdir(outputPath)
-    rmdir(outputPath,'s');
-    mkdir(outputPath);
-else
-    mkdir(outputPath);
-end
+% if isdir(outputPath)
+%     rmdir(outputPath,'s');
+%     mkdir(outputPath);
+% else
+%     mkdir(outputPath);
+% end
 
 %% Files to Compile
-tensor = '/Users/sid/Repos/DKI-Designer/designer/tensorfitting.m';
-run_smoothing = '/Users/sid/Repos/DKI-Designer/designer/runsmoothing.m';
-gibbs = '/Users/sid/Repos/DKI-Designer/designer/rungibbscorrection.m';
-outlier = '/Users/sid/Repos/DKI-Designer/designer/outlierdetection.m';
-dki_fit = '/Users/sid/Repos/DKI-Designer/dki_fit.m';
-dki_param = '/Users/sid/Repos/DKI-Designer/dki_parameters.m';
-smoothing = '/Users/sid/Repos/DKI-Designer/smoothing.m';
-wmti = '/Users/sid/Repos/DKI-Designer/wmti_parameters.m';
-irlls = '/Users/sid/Repos/DKI-Designer/IRLLS/irlls.m';
+tensor = fullfile(baseFolder,'tensorfitting.m');
+run_smoothing = fullfile(desFolder,'runsmoothing.m');
+gibbs = fullfile(desFolder,'rungibbscorrection.m');
+outlier = fullfile(desFolder,'outlierdetection.m');
+dki_fit = fullfile(baseFolder,'dki_fit.m');
+dki_param = fullfile(baseFolder,'dki_parameters.m');
+smoothing = fullfile(baseFolder,'smoothing.m');
+wmti = fullfile(baseFolder,'wmti_parameters.m');
+irlls = fullfile(baseFolder,'IRLLS/irlls.m');
 
 %% Folders to Compile
-niftiPath = '/Users/sid/Repos/DKI-Designer/designer/NIfTI_20140122';
-median = '/Users/sid/Repos/DKI-Designer/Median_Filter';
-extras = '/Users/sid/Repos/DKI-Designer/Extras';
+niftiPath = fullfile(desFolder,'NIfTI_20140122');
+median = fullfile(baseFolder,'Median_Filter');
+extras = fullfile(baseFolder,'Extras');
 
 %% Dependencies
-dirs10000 = '/Users/sid/Repos/DKI-Designer/dirs10000.mat';
-dirs15 = '/Users/sid/Repos/DKI-Designer/designer/dirs15.txt';
-dirs30 = '/Users/sid/Repos/DKI-Designer/designer/dirs30.txt';
+dirs10000 = fullfile(baseFolder,'dirs10000.mat');;
+dirs15 = fullfile(desFolder,'dirs15.txt');
+dirs30 = fullfile(desFolder,'dirs30.txt');
 
 %% Run Compiler
 mcc('-v','-m',tensor,'-o','tensorfitting',...
