@@ -17,7 +17,7 @@ desFolder = fullfile(pwd,'designer');
 % end
 
 %% Files to Compile
-tensor = fullfile(baseFolder,'tensorfitting.m');
+tensor = fullfile(desFolder,'tensorfitting.m');
 run_smoothing = fullfile(desFolder,'runsmoothing.m');
 gibbs = fullfile(desFolder,'rungibbscorrection.m');
 outlier = fullfile(desFolder,'outlierdetection.m');
