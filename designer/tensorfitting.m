@@ -217,7 +217,7 @@ if size(noisePath,1) > 0
     Inoise = niftiread(noisePath);
     Inoise(find(isnan(Inoise))) = 0;
     
-    bvalPath = dir(fullfile(outdir,'*bval'));
+    bvalPath = dir(fullfile(outdir,'dwi_designer.bval'));
     bvalPath = fullfile(bvalPath.folder,bvalPath.name);
     bval = round(load(bvalPath));
     
